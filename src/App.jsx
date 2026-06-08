@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FileText, Image, Sliders, Menu, X, ShieldCheck, Cpu } from 'lucide-react';
 import OCRTool from './components/OCRTool';
 import ImageConverter from './components/ImageConverter';
@@ -8,8 +8,27 @@ import AdsensePlaceholder from './components/AdsensePlaceholder';
 import logoImg from './assets/logo.png';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('ocr');
+  const getTabFromHash = () => {
+    const hash = window.location.hash.replace('#/', '');
+    const validTabs = ['ocr', 'convert', 'resize', 'docs'];
+    return validTabs.includes(hash) ? hash : 'ocr';
+  };
+
+  const [activeTab, setActiveTab] = useState(getTabFromHash());
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (!window.location.hash) {
+      window.location.hash = '#/ocr';
+    }
+
+    const handleHashChange = () => {
+      setActiveTab(getTabFromHash());
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const tabs = [
     {
@@ -68,6 +87,7 @@ export default function App() {
               <button
                 className={`menu-item-btn ${activeTab === tab.id ? 'active' : ''}`}
                 onClick={() => {
+                  window.location.hash = `#/${tab.id}`;
                   setActiveTab(tab.id);
                   setIsSidebarOpen(false);
                 }}

@@ -623,6 +623,55 @@ export default function DocumentConverter() {
           </div>
         </div>
       )}
+
+      {/* SEO Guide & FAQ Section */}
+      <section className="seo-guide-section">
+        <div>
+          <h2 className="seo-guide-title">How to Convert PDF, Word, & Excel Documents</h2>
+          <p className="seo-guide-intro">
+            Change file extensions instantly between PDF, DOCX, XLSX, and text files without third-party server uploads. Follow this simple process:
+          </p>
+          <div className="seo-steps-grid">
+            <div className="seo-step-card">
+              <div className="seo-step-number">01</div>
+              <h3 className="seo-step-title">Select Documents</h3>
+              <p className="seo-step-desc">Drag and drop Word (.docx), Excel (.xlsx, .xls), or PDF (.pdf) files into the drop zone.</p>
+            </div>
+            <div className="seo-step-card">
+              <div className="seo-step-number">02</div>
+              <h3 className="seo-step-title">Choose Output</h3>
+              <p className="seo-step-desc">For PDF files, pick the target format (Word, Excel, Images Zip, or Plain Text) from the settings list.</p>
+            </div>
+            <div className="seo-step-card">
+              <div className="seo-step-number">03</div>
+              <h3 className="seo-step-title">Convert and Download</h3>
+              <p className="seo-step-desc">Click "Convert All" and download the converted files. Processing happens instantly on your device.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="seo-faq-container">
+          <h3 className="seo-faq-title">Frequently Asked Questions (FAQ)</h3>
+          <div className="seo-faq-grid">
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">Which document formats can I convert?</h4>
+              <p className="seo-faq-a">Our converter supports PDF to Word (DOCX), PDF to Excel (XLSX), PDF to Plain Text (TXT), PDF to Images (PNG), Word to PDF, and Excel to PDF.</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">Are my documents sent to any external server?</h4>
+              <p className="seo-faq-a">No. All file readers, converters, layout parsers, and file writers are programmed to execute locally on your computer. Your document data is 100% confidential and secure.</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">How does the PDF to Excel conversion work?</h4>
+              <p className="seo-faq-a">The converter utilizes a client-side layout engine that extracts text characters and their absolute positions on the PDF pages. It groups tabular characters into cells and compiles them into a SheetJS spreadsheet workbook download.</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">Can I convert images to PDF documents?</h4>
+              <p className="seo-faq-a">Yes. In addition to Word and Excel documents, you can drop PNG, JPG, or WebP images into the converter to merge them into a single PDF file.</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

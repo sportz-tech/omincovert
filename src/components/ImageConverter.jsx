@@ -445,6 +445,55 @@ export default function ImageConverter() {
           </div>
         </div>
       )}
+
+      {/* SEO Guide & FAQ Section */}
+      <section className="seo-guide-section">
+        <div>
+          <h2 className="seo-guide-title">How to Convert Image Formats & Remove Backgrounds</h2>
+          <p className="seo-guide-intro">
+            Convert image extensions in bulk and remove photo background layers client-side. Follow these steps to optimize and convert your files:
+          </p>
+          <div className="seo-steps-grid">
+            <div className="seo-step-card">
+              <div className="seo-step-number">01</div>
+              <h3 className="seo-step-title">Load Photos</h3>
+              <p className="seo-step-desc">Select or drop PNG, JPG, WebP, or BMP files. You can convert single or multiple files in one batch.</p>
+            </div>
+            <div className="seo-step-card">
+              <div className="seo-step-number">02</div>
+              <h3 className="seo-step-title">Configure Formats</h3>
+              <p className="seo-step-desc">Pick target formats, adjust quality compression sliders, or check the "Remove Background" AI toggle.</p>
+            </div>
+            <div className="seo-step-card">
+              <div className="seo-step-number">03</div>
+              <h3 className="seo-step-title">Convert & Save</h3>
+              <p className="seo-step-desc">Click "Convert All" and download individual converted files or retrieve them as a single ZIP archive.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="seo-faq-container">
+          <h3 className="seo-faq-title">Frequently Asked Questions (FAQ)</h3>
+          <div className="seo-faq-grid">
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">Which image conversions are supported?</h4>
+              <p className="seo-faq-a">You can convert PNG to JPG, WebP to PNG, JPG to PNG, BMP to WebP, and any other configuration between JPG/JPEG, PNG, WebP, and BMP format.</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">How does the background removal work?</h4>
+              <p className="seo-faq-a">Our background isolation feature runs entirely client-side using state-of-the-art AI networks loaded directly in your browser. This isolates the main subject and makes the background transparent without sending data to any servers.</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">What happens if I remove backgrounds and convert to JPG?</h4>
+              <p className="seo-faq-a">Since JPG format does not support alpha transparency layers, the removed background area will automatically be styled with a clean white color. For transparent background outputs, choose PNG or WebP format.</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">Is this image format converter completely free?</h4>
+              <p className="seo-faq-a">Yes. There are no registration forms, upload size limits, or paywalls. Everything is processed directly inside your browser.</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

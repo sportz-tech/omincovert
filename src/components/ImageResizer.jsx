@@ -544,6 +544,55 @@ export default function ImageResizer() {
           </div>
         </div>
       )}
+
+      {/* SEO Guide & FAQ Section */}
+      <section className="seo-guide-section">
+        <div>
+          <h2 className="seo-guide-title">How to Crop & Resize Images for Social Media</h2>
+          <p className="seo-guide-intro">
+            Quickly resize graphics to fit Instagram feed grids, story reels, Facebook banners, YouTube thumbnails, and custom pixels. Follow this guide to resize:
+          </p>
+          <div className="seo-steps-grid">
+            <div className="seo-step-card">
+              <div className="seo-step-number">01</div>
+              <h3 className="seo-step-title">Load Graphics</h3>
+              <p className="seo-step-desc">Drag and drop your images. Choose the image in the strip to preview it dynamically on the visual canvas.</p>
+            </div>
+            <div className="seo-step-card">
+              <div className="seo-step-number">02</div>
+              <h3 className="seo-step-title">Select Preset</h3>
+              <p className="seo-step-desc">Pick a social media template (e.g. 16:9, 1:1, 9:16) or toggle custom width and height inputs.</p>
+            </div>
+            <div className="seo-step-card">
+              <div className="seo-step-number">03</div>
+              <h3 className="seo-step-title">Set Fit & Compression</h3>
+              <p className="seo-step-desc">Select "Cover & Crop" or "Contain & Fit" (with blurred background border styles) and drag quality compression sliders to see estimated file sizes instantly.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="seo-faq-container">
+          <h3 className="seo-faq-title">Frequently Asked Questions (FAQ)</h3>
+          <div className="seo-faq-grid">
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">What is the difference between Cover and Contain?</h4>
+              <p className="seo-faq-a">"Cover & Crop" scales the image to completely fill the canvas, cropping out any overflow borders. "Contain & Fit" scales the image to fit entirely inside the canvas, adding blurred borders or solid padding bars around empty spaces to preserve the complete graphic.</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">Can I resize images for YouTube and Instagram?</h4>
+              <p className="seo-faq-a">Yes. We have built-in aspect-ratio templates for Instagram Feed Posts (1:1 & 4:5), Stories and Reels (9:16), Facebook Feed Posts, Facebook Cover headers, YouTube Thumbnails (16:9), and Pinterest Pins (2:3).</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">How does the real-time file size estimator work?</h4>
+              <p className="seo-faq-a">As you drag the quality compression slider or change dimensions, the app converts a temporary canvas structure to a data blob in the background. It measures this blob's bytes in real-time, giving you an exact size estimate before you download.</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">Does the resizer upload files to any servers?</h4>
+              <p className="seo-faq-a">No. All resizing, canvas rendering, background blurring, and compression are completed locally on your browser. Your data is 100% private and offline-friendly.</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

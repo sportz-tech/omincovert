@@ -396,6 +396,55 @@ export default function OCRTool() {
           </div>
         </div>
       )}
+
+      {/* SEO Guide & FAQ Section */}
+      <section className="seo-guide-section">
+        <div>
+          <h2 className="seo-guide-title">How to Extract Text from Images with Client-Side OCR</h2>
+          <p className="seo-guide-intro">
+            OmniConvert provides a secure, serverless Optical Character Recognition (OCR) tool that reads text from images instantly. Follow these three simple steps to convert files:
+          </p>
+          <div className="seo-steps-grid">
+            <div className="seo-step-card">
+              <div className="seo-step-number">01</div>
+              <h3 className="seo-step-title">Upload Images</h3>
+              <p className="seo-step-desc">Drag and drop one or multiple JPEG, PNG, or WebP images into the upload area above.</p>
+            </div>
+            <div className="seo-step-card">
+              <div className="seo-step-number">02</div>
+              <h3 className="seo-step-title">Select Language</h3>
+              <p className="seo-step-desc">Choose the language (English or Hindi) contained in your image to maximize text recognition accuracy.</p>
+            </div>
+            <div className="seo-step-card">
+              <div className="seo-step-number">03</div>
+              <h3 className="seo-step-title">Edit & Download</h3>
+              <p className="seo-step-desc">Refine the extracted text directly in the browser and download it as a plain TXT, Word document (.docx), or ZIP.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="seo-faq-container">
+          <h3 className="seo-faq-title">Frequently Asked Questions (FAQ)</h3>
+          <div className="seo-faq-grid">
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">Is my uploaded document secure?</h4>
+              <p className="seo-faq-a">Yes. Your images are never uploaded to any server. All text extraction is performed entirely on your computer using client-side WebAssembly. This ensures 100% data privacy.</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">Can this tool read handwritten text?</h4>
+              <p className="seo-faq-a">Our OCR tool works best on typed, scanned, or digital document screenshots. Recognition accuracy for handwriting depends heavily on the legibility of the script.</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">Can I extract text from multiple images at once?</h4>
+              <p className="seo-faq-a">Absolutely. You can select multiple images to upload in bulk. You can then run OCR on all of them sequentially and download the zipped results.</p>
+            </div>
+            <div className="seo-faq-card">
+              <h4 className="seo-faq-q">Does this tool support Hindi OCR?</h4>
+              <p className="seo-faq-a">Yes, we have native support for Devanagari script (Hindi). Just select "Hindi" from the language dropdown before processing your image.</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
