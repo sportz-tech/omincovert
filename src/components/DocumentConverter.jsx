@@ -652,20 +652,20 @@ export default function DocumentConverter({ initialDocType = 'pdf-to-docx' }) {
       {/* SEO Guide & FAQ Section */}
       <section className="seo-guide-section">
         <div>
-          <h2 className="seo-guide-title">How to Convert PDF, Word, & Excel Documents</h2>
+          <h2 className="seo-guide-title">How to Convert PDF, Word Documents & Excel Spreadsheet Files</h2>
           <p className="seo-guide-intro">
-            Change file extensions instantly between PDF, DOCX, XLSX, and text files without third-party server uploads. Follow this simple process:
+            Change file formats instantly between PDF documents, Word DOCX documents, Excel XLSX spreadsheet cell sheets, and text files offline with no server uploads. Follow this simple local conversion guide:
           </p>
           <div className="seo-steps-grid">
             <div className="seo-step-card">
               <div className="seo-step-number">01</div>
               <h3 className="seo-step-title">Select Documents</h3>
-              <p className="seo-step-desc">Drag and drop Word (.docx), Excel (.xlsx, .xls), or PDF (.pdf) files into the drop zone.</p>
+              <p className="seo-step-desc">Drag and drop Word documents (.docx), Excel spreadsheets (.xlsx, .xls), or PDF (.pdf) files into the drop zone.</p>
             </div>
             <div className="seo-step-card">
               <div className="seo-step-number">02</div>
               <h3 className="seo-step-title">Choose Output</h3>
-              <p className="seo-step-desc">For PDF files, pick the target format (Word, Excel, Images Zip, or Plain Text) from the settings list.</p>
+              <p className="seo-step-desc">For PDF files, pick the target format (Word Doc, Excel Spreadsheet, Images Zip, or Plain Text) from the settings list.</p>
             </div>
             <div className="seo-step-card">
               <div className="seo-step-number">03</div>
@@ -680,15 +680,15 @@ export default function DocumentConverter({ initialDocType = 'pdf-to-docx' }) {
           <div className="seo-faq-grid">
             <div className="seo-faq-card">
               <h4 className="seo-faq-q">Which document formats can I convert?</h4>
-              <p className="seo-faq-a">Our converter supports PDF to Word (DOCX), PDF to Excel (XLSX), PDF to Plain Text (TXT), PDF to Images (PNG), Word to PDF, and Excel to PDF.</p>
+              <p className="seo-faq-a">Our converter supports PDF to Word Doc (DOCX), PDF to Excel Spreadsheet Cell Sheet (XLSX), PDF to Plain Text (TXT), PDF to Images (PNG), Word to PDF, and Excel to PDF.</p>
             </div>
             <div className="seo-faq-card">
               <h4 className="seo-faq-q">Are my documents sent to any external server?</h4>
               <p className="seo-faq-a">No. All file readers, converters, layout parsers, and file writers are programmed to execute locally on your computer. Your document data is 100% confidential and secure.</p>
             </div>
             <div className="seo-faq-card">
-              <h4 className="seo-faq-q">How does the PDF to Excel conversion work?</h4>
-              <p className="seo-faq-a">The converter utilizes a client-side layout engine that extracts text characters and their absolute positions on the PDF pages. It groups tabular characters into cells and compiles them into a SheetJS spreadsheet workbook download.</p>
+              <h4 className="seo-faq-q">How does PDF to Excel Spreadsheet Cell Sheet conversion work?</h4>
+              <p className="seo-faq-a">Our browser engine reads textual cell layouts inside PDF document layouts. It groups structured tables into data columns and exports them into an offline Excel XLSX spreadsheet cell sheet instantly using client-side JavaScript.</p>
             </div>
             <div className="seo-faq-card">
               <h4 className="seo-faq-q">Can I convert images to PDF documents?</h4>

@@ -406,9 +406,9 @@ export default function OCRTool({ initialLanguage = 'eng' }) {
       {/* SEO Guide & FAQ Section */}
       <section className="seo-guide-section">
         <div>
-          <h2 className="seo-guide-title">How to Extract Text from Images with Client-Side OCR</h2>
+          <h2 className="seo-guide-title">How to Extract Text from Images & Screenshots (OCR) Online</h2>
           <p className="seo-guide-intro">
-            OmniConvert provides a secure, serverless Optical Character Recognition (OCR) tool that reads text from images instantly. Follow these three simple steps to convert files:
+            Learn how to extract text from screenshots, scanned documents, and image files instantly with no signup required. Follow these three simple steps:
           </p>
           <div className="seo-steps-grid">
             <div className="seo-step-card">
@@ -424,7 +424,7 @@ export default function OCRTool({ initialLanguage = 'eng' }) {
             <div className="seo-step-card">
               <div className="seo-step-number">03</div>
               <h3 className="seo-step-title">Edit & Download</h3>
-              <p className="seo-step-desc">Refine the extracted text directly in the browser and download it as a plain TXT, Word document (.docx), or ZIP.</p>
+              <p className="seo-step-desc">Refine the extracted text directly in the browser and download it as a plain TXT, Word docx document, or ZIP.</p>
             </div>
           </div>
         </div>
@@ -433,11 +433,11 @@ export default function OCRTool({ initialLanguage = 'eng' }) {
           <h3 className="seo-faq-title">Frequently Asked Questions (FAQ)</h3>
           <div className="seo-faq-grid">
             <div className="seo-faq-card">
-              <h4 className="seo-faq-q">Is my uploaded document secure?</h4>
-              <p className="seo-faq-a">Yes. Your images are never uploaded to any server. All text extraction is performed entirely on your computer using client-side WebAssembly. This ensures 100% data privacy.</p>
+              <h4 className="seo-faq-q">Is my picture to text conversion secure?</h4>
+              <p className="seo-faq-a">Yes. Your pictures and documents are never uploaded to any external server. All text recognition is performed entirely on your computer using client-side JavaScript WebAssembly. This guarantees 100% data privacy.</p>
             </div>
             <div className="seo-faq-card">
-              <h4 className="seo-faq-q">Can this tool read handwritten text?</h4>
+              <h4 className="seo-faq-q">Can I scan handwritten text to Word documents?</h4>
               <p className="seo-faq-a">Our OCR tool works best on typed, scanned, or digital document screenshots. Recognition accuracy for handwriting depends heavily on the legibility of the script.</p>
             </div>
             <div className="seo-faq-card">
