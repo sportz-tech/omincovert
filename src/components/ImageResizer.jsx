@@ -42,7 +42,7 @@ export default function ImageResizer() {
       const newFiles = selected.map(file => ({
         id: Math.random().toString(36).substring(2, 9),
         name: file.name,
-        size: (file.size / 1024).toFixed(1) + ' KB',
+        size: file.size > 1024 * 1024 ? (file.size / (1024 * 1024)).toFixed(2) + ' MB' : (file.size / 1024).toFixed(1) + ' KB',
         file: file,
         preview: URL.createObjectURL(file),
         status: 'pending', // pending, completed, failed
@@ -174,11 +174,16 @@ export default function ImageResizer() {
       const newName = `${origName}_resized_${targetWidth}x${targetHeight}.${ext}`;
       const url = URL.createObjectURL(blob);
 
+      const resizedSizeStr = blob.size > 1024 * 1024
+        ? (blob.size / (1024 * 1024)).toFixed(2) + ' MB'
+        : (blob.size / 1024).toFixed(1) + ' KB';
+
       updatedFiles.push({
         ...fileObj,
         status: 'completed',
         resizedUrl: url,
-        resizedName: newName
+        resizedName: newName,
+        resizedSize: resizedSizeStr
       });
     }
 
@@ -405,16 +410,15 @@ export default function ImageResizer() {
               </div>
 
               {/* Status List per image */}
-              <div style={{ marginTop: '12px', borderTop: '1px solid var(--card-border)', paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '180px', overflowY: 'auto' }}>
+              <div style={{ marginTop: '12px', borderTop: '1px solid var(--card-border)', paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '200px', overflowY: 'auto' }}>
                 {files.map(f => (
-                  <div key={f.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem' }}>
-                    <span style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '140px' }}>
-                      {f.name}
-                    </span>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      {f.status === 'completed' ? (
-                        <>
-                          <span style={{ color: 'var(--success)', fontWeight: 600 }}>Ready</span>
+                  <div key={f.id} style={{ display: 'flex', flexDirection: 'column', gap: '4px', borderBottom: '1px solid rgba(255,255,255,0.02)', paddingBottom: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem' }}>
+                      <span style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', maxWidth: '170px', fontWeight: 600 }}>
+                        {f.name}
+                      </span>
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        {f.status === 'completed' ? (
                           <button 
                             className="btn btn-secondary" 
                             style={{ padding: '3px 6px', fontSize: '0.7rem' }}
@@ -422,16 +426,24 @@ export default function ImageResizer() {
                           >
                             Download
                           </button>
-                        </>
-                      ) : (
-                        <span style={{ color: 'var(--text-muted)' }}>Pending</span>
+                        ) : (
+                          <span style={{ color: 'var(--text-muted)' }}>Pending</span>
+                        )}
+                        <button 
+                          style={{ border: 'none', background: 'transparent', color: 'var(--text-muted)', cursor: 'pointer' }}
+                          onClick={() => removeFile(f.id)}
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      </div>
+                    </div>
+                    
+                    {/* Sizes row */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
+                      <span>Original: {f.size}</span>
+                      {f.status === 'completed' && f.resizedSize && (
+                        <span style={{ color: 'var(--accent-cyan)' }}>Resized: {f.resizedSize}</span>
                       )}
-                      <button 
-                        style={{ border: 'none', background: 'transparent', color: 'var(--text-muted)', cursor: 'pointer' }}
-                        onClick={() => removeFile(f.id)}
-                      >
-                        <Trash2 size={12} />
-                      </button>
                     </div>
                   </div>
                 ))}
