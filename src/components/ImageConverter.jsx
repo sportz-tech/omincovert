@@ -3,13 +3,18 @@ import JSZip from 'jszip';
 import { Upload, Download, Trash2, Sliders, Image, Check, AlertCircle, RefreshCw } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function ImageConverter() {
+export default function ImageConverter({ initialRemoveBg = false }) {
   const [files, setFiles] = useState([]);
   const [globalFormat, setGlobalFormat] = useState('image/jpeg');
   const [globalQuality, setGlobalQuality] = useState(0.85);
-  const [globalRemoveBg, setGlobalRemoveBg] = useState(false);
+  const [globalRemoveBg, setGlobalRemoveBg] = useState(initialRemoveBg);
   const [isConverting, setIsConverting] = useState(false);
   const fileInputRef = useRef(null);
+
+  React.useEffect(() => {
+    setGlobalRemoveBg(initialRemoveBg);
+    setFiles(prev => prev.map(f => f.status === 'pending' ? { ...f, removeBg: initialRemoveBg } : f));
+  }, [initialRemoveBg]);
 
   // File Select Handler
   const handleFileChange = (e) => {

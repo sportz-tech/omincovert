@@ -13,7 +13,7 @@ if (pdfjsLib) {
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 }
 
-export default function DocumentConverter() {
+export default function DocumentConverter({ initialDocType = 'pdf-to-docx' }) {
   const [files, setFiles] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef(null);
@@ -34,7 +34,13 @@ export default function DocumentConverter() {
             { value: 'png', label: 'Images (.zip of PNGs)' },
             { value: 'txt', label: 'Plain Text (.txt)' }
           ];
-          defaultTarget = 'docx';
+          
+          if (initialDocType && initialDocType.startsWith('pdf-to-')) {
+            const requestedTarget = initialDocType.replace('pdf-to-', '');
+            defaultTarget = targetOptions.some(opt => opt.value === requestedTarget) ? requestedTarget : 'docx';
+          } else {
+            defaultTarget = 'docx';
+          }
         } else if (ext === 'docx') {
           targetOptions = [{ value: 'pdf', label: 'PDF Document (.pdf)' }];
           defaultTarget = 'pdf';
@@ -491,6 +497,25 @@ export default function DocumentConverter() {
     URL.revokeObjectURL(url);
   };
 
+  const getAcceptedExtensions = () => {
+    if (!initialDocType) return ".pdf,.docx,.xlsx,.xls,.png,.jpg,.jpeg,.webp,.bmp";
+    if (initialDocType.startsWith('pdf-to-')) return ".pdf";
+    if (initialDocType === 'docx-to-pdf') return ".docx";
+    if (initialDocType === 'xlsx-to-pdf') return ".xlsx,.xls";
+    return ".pdf,.docx,.xlsx,.xls,.png,.jpg,.jpeg,.webp,.bmp";
+  };
+
+  const getUploadDesc = () => {
+    if (!initialDocType) return "Supports PDF, Word, Excel, and Images (PNG, JPG, WebP, BMP)";
+    if (initialDocType === 'pdf-to-docx') return "Upload PDF documents to convert to Word (.docx) format";
+    if (initialDocType === 'pdf-to-xlsx') return "Upload PDF documents to extract tables to Excel (.xlsx) format";
+    if (initialDocType === 'pdf-to-png') return "Upload PDF documents to convert pages to PNG images";
+    if (initialDocType === 'pdf-to-txt') return "Upload PDF documents to extract plain text (.txt)";
+    if (initialDocType === 'docx-to-pdf') return "Upload Word (.docx) documents to convert to PDF format";
+    if (initialDocType === 'xlsx-to-pdf') return "Upload Excel (.xlsx, .xls) files to convert to PDF format";
+    return "Supports PDF, Word, Excel, and Images (PNG, JPG, WebP, BMP)";
+  };
+
   return (
     <div className="workspace-container">
       {/* Upload Zone */}
@@ -518,7 +543,7 @@ export default function DocumentConverter() {
         </div>
         <div>
           <p className="drag-drop-title">Drag & drop your files here</p>
-          <p className="drag-drop-desc">Supports PDF, Word, Excel, and Images (PNG, JPG, WebP, BMP)</p>
+          <p className="drag-drop-desc">{getUploadDesc()}</p>
         </div>
           <button className="btn btn-secondary" style={{ pointerEvents: 'none' }}>
             Browse Files
@@ -528,7 +553,7 @@ export default function DocumentConverter() {
             ref={fileInputRef}
             className="file-input-hidden" 
             multiple 
-            accept=".pdf,.docx,.xlsx,.xls,.png,.jpg,.jpeg,.webp,.bmp"
+            accept={getAcceptedExtensions()}
           onChange={handleFileChange}
         />
       </div>

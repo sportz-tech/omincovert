@@ -8,60 +8,163 @@ import AdsensePlaceholder from './components/AdsensePlaceholder';
 import logoImg from './assets/logo.png';
 
 export default function App() {
-  const getTabFromHash = () => {
-    const hash = window.location.hash.replace('#/', '');
-    const validTabs = ['ocr', 'convert', 'resize', 'docs'];
-    return validTabs.includes(hash) ? hash : 'ocr';
-  };
+  const parseCurrentPath = () => {
+    const path = window.location.pathname.replace(/^\/|\/$/g, '');
+    
+    // Default values
+    let tab = 'ocr';
+    let ocrLang = 'eng';
+    let converterRemoveBg = false;
+    let resizerPreset = 'insta_story';
+    let docType = 'pdf-to-docx';
 
-  const [activeTab, setActiveTab] = useState(getTabFromHash());
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  useEffect(() => {
-    if (!window.location.hash) {
-      window.location.hash = '#/ocr';
+    switch (path) {
+      case 'image-to-text':
+      case 'ocr':
+        tab = 'ocr';
+        ocrLang = 'eng';
+        break;
+      case 'image-to-text-hindi':
+        tab = 'ocr';
+        ocrLang = 'hin';
+        break;
+      case 'image-converter':
+        tab = 'convert';
+        break;
+      case 'image-remove-background':
+      case 'remove-background':
+        tab = 'convert';
+        converterRemoveBg = true;
+        break;
+      case 'social-media-resizer':
+      case 'image-resizer':
+        tab = 'resize';
+        break;
+      case 'image-resize-facebook':
+        tab = 'resize';
+        resizerPreset = 'fb_feed';
+        break;
+      case 'image-resize-facebook-cover':
+        tab = 'resize';
+        resizerPreset = 'fb_cover';
+        break;
+      case 'image-resize-youtube':
+        tab = 'resize';
+        resizerPreset = 'yt_thumb';
+        break;
+      case 'image-resize-instagram-story':
+      case 'image-resize-instagram-reel':
+        tab = 'resize';
+        resizerPreset = 'insta_story';
+        break;
+      case 'image-resize-instagram':
+        tab = 'resize';
+        resizerPreset = 'insta_square';
+        break;
+      case 'image-resize-pinterest':
+        tab = 'resize';
+        resizerPreset = 'pinterest_pin';
+        break;
+      case 'document-converter':
+      case 'docs':
+        tab = 'docs';
+        break;
+      case 'pdf-to-word':
+        tab = 'docs';
+        docType = 'pdf-to-docx';
+        break;
+      case 'pdf-to-excel':
+        tab = 'docs';
+        docType = 'pdf-to-xlsx';
+        break;
+      case 'pdf-to-png':
+      case 'pdf-to-jpg':
+        tab = 'docs';
+        docType = 'pdf-to-png';
+        break;
+      case 'pdf-to-text':
+      case 'pdf-to-txt':
+        tab = 'docs';
+        docType = 'pdf-to-txt';
+        break;
+      case 'word-to-pdf':
+        tab = 'docs';
+        docType = 'docx-to-pdf';
+        break;
+      case 'excel-to-pdf':
+        tab = 'docs';
+        docType = 'xlsx-to-pdf';
+        break;
+      default:
+        tab = 'ocr';
+        ocrLang = 'eng';
     }
 
-    const handleHashChange = () => {
-      setActiveTab(getTabFromHash());
+    return { tab, ocrLang, converterRemoveBg, resizerPreset, docType };
+  };
+
+  const tabPaths = {
+    ocr: '/image-to-text',
+    convert: '/image-converter',
+    resize: '/social-media-resizer',
+    docs: '/document-converter'
+  };
+
+  const [routeParams, setRouteParams] = useState(parseCurrentPath());
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const activeTab = routeParams.tab;
+
+  useEffect(() => {
+    if (window.location.pathname === '/' || window.location.pathname === '') {
+      window.history.replaceState(null, '', '/image-to-text');
+    }
+
+    const handlePopState = () => {
+      setRouteParams(parseCurrentPath());
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  const navigateTo = (tabId) => {
+    window.history.pushState(null, '', tabPaths[tabId]);
+    setRouteParams(parseCurrentPath());
+  };
 
   const tabs = [
     {
       id: 'ocr',
       label: 'Image to Text (OCR)',
       icon: <FileText className="menu-icon" />,
-      component: <OCRTool />,
+      component: <OCRTool initialLanguage={routeParams.ocrLang} />,
       subtitle: 'Extract editable text from any image file instantly in your browser'
     },
     {
       id: 'convert',
       label: 'Image Converter',
       icon: <Image className="menu-icon" />,
-      component: <ImageConverter />,
+      component: <ImageConverter initialRemoveBg={routeParams.converterRemoveBg} />,
       subtitle: 'Convert between PNG, JPG, WebP, and BMP format in bulk'
     },
     {
       id: 'resize',
       label: 'Social Media Resizer',
       icon: <Sliders className="menu-icon" />,
-      component: <ImageResizer />,
+      component: <ImageResizer initialPresetId={routeParams.resizerPreset} />,
       subtitle: 'Crop & fit images for Facebook post/cover, Instagram story/reel, YouTube and more'
     },
     {
       id: 'docs',
       label: 'Document Converter',
       icon: <Cpu className="menu-icon" />,
-      component: <DocumentConverter />,
+      component: <DocumentConverter initialDocType={routeParams.docType} />,
       subtitle: 'Client-side conversion between Word (DOCX), PDF, and Excel formats'
     }
   ];
 
-  const currentTab = tabs.find(t => t.id === activeTab);
+  const currentTab = tabs.find(t => t.id === activeTab) || tabs[0];
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -87,8 +190,7 @@ export default function App() {
               <button
                 className={`menu-item-btn ${activeTab === tab.id ? 'active' : ''}`}
                 onClick={() => {
-                  window.location.hash = `#/${tab.id}`;
-                  setActiveTab(tab.id);
+                  navigateTo(tab.id);
                   setIsSidebarOpen(false);
                 }}
               >

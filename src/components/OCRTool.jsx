@@ -5,13 +5,19 @@ import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { Upload, FileText, Copy, Download, Trash2, Check, AlertCircle, RefreshCw } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function OCRTool() {
+export default function OCRTool({ initialLanguage = 'eng' }) {
   const [files, setFiles] = useState([]);
   const [activeFileId, setActiveFileId] = useState(null);
   const [isProcessingAll, setIsProcessingAll] = useState(false);
   const [copiedId, setCopiedId] = useState(false);
-  const [ocrLanguage, setOcrLanguage] = useState('eng');
+  const [ocrLanguage, setOcrLanguage] = useState(initialLanguage);
   const fileInputRef = useRef(null);
+
+  React.useEffect(() => {
+    if (initialLanguage) {
+      setOcrLanguage(initialLanguage);
+    }
+  }, [initialLanguage]);
 
   const activeFile = files.find(f => f.id === activeFileId);
 

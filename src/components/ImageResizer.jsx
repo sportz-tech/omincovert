@@ -14,12 +14,18 @@ const PRESETS = [
   { id: 'custom', label: 'Custom Dimension', ratio: 'Custom', w: 1000, h: 1000, icon: '⚙️' }
 ];
 
-export default function ImageResizer() {
+export default function ImageResizer({ initialPresetId = 'insta_story' }) {
   const [files, setFiles] = useState([]);
   const [activeFileId, setActiveFileId] = useState(null);
   
   // Resizing Configurations
-  const [selectedPresetId, setSelectedPresetId] = useState('insta_story');
+  const [selectedPresetId, setSelectedPresetId] = useState(initialPresetId);
+
+  useEffect(() => {
+    if (initialPresetId) {
+      setSelectedPresetId(initialPresetId);
+    }
+  }, [initialPresetId]);
   const [customWidth, setCustomWidth] = useState(1080);
   const [customHeight, setCustomHeight] = useState(1920);
   const [fitMode, setFitMode] = useState('cover'); // 'cover' or 'contain'
