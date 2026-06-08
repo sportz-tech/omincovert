@@ -7,6 +7,7 @@ export default function ImageConverter() {
   const [files, setFiles] = useState([]);
   const [globalFormat, setGlobalFormat] = useState('image/jpeg');
   const [globalQuality, setGlobalQuality] = useState(0.85);
+  const [globalRemoveBg, setGlobalRemoveBg] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -23,6 +24,7 @@ export default function ImageConverter() {
         status: 'pending', // pending, converting, completed, failed
         format: globalFormat,
         quality: globalQuality,
+        removeBg: globalRemoveBg,
         convertedUrl: null,
         convertedName: null,
         convertedSize: null
@@ -45,54 +47,94 @@ export default function ImageConverter() {
     setFiles(prev => prev.map(f => f.id === id ? { ...f, quality } : f));
   };
 
+  const updateFileRemoveBg = (id, removeBg) => {
+    setFiles(prev => prev.map(f => f.id === id ? { ...f, removeBg } : f));
+  };
+
   // Canvas Convert Function
   const convertSingleFile = (fileObj) => {
-    return new Promise((resolve) => {
-      // Update status to converting
-      setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, status: 'converting' } : f));
+    return new Promise(async (resolve) => {
+      try {
+        let currentSource = fileObj.preview;
+        let originalFile = fileObj.file;
 
-      const img = new window.Image();
-      img.src = fileObj.preview;
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        
-        const ctx = canvas.getContext('2d');
-        // Handle transparency background for JPEGs (defaults to black, let's make it white)
-        if (fileObj.format === 'image/jpeg') {
-          ctx.fillStyle = '#FFFFFF';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        if (fileObj.removeBg) {
+          // Update status to bg-removing
+          setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, status: 'bg-removing', progressText: 'Initializing AI...' } : f));
+          
+          const { removeBackground } = await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal/+esm');
+          
+          const config = {
+            progress: (key, current, total) => {
+              const percent = Math.round((current / total) * 100);
+              let text = 'Processing...';
+              if (key.includes('fetch')) {
+                text = `Model Download: ${percent}%`;
+              } else if (key.includes('process')) {
+                text = `Isolating: ${percent}%`;
+              }
+              setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, progressText: text } : f));
+            }
+          };
+
+          const processedBlob = await removeBackground(originalFile, config);
+          currentSource = URL.createObjectURL(processedBlob);
         }
-        
-        ctx.drawImage(img, 0, 0);
 
-        canvas.toBlob((blob) => {
-          if (blob) {
-            const ext = fileObj.format.split('/')[1] === 'jpeg' ? 'jpg' : fileObj.format.split('/')[1];
-            const origName = fileObj.name.substring(0, fileObj.name.lastIndexOf('.'));
-            const newName = `${origName}.${ext}`;
-            const url = URL.createObjectURL(blob);
-            const sizeStr = (blob.size / 1024).toFixed(1) + ' KB';
+        setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, status: 'converting' } : f));
 
-            setFiles(prev => prev.map(f => f.id === fileObj.id ? {
-              ...f,
-              status: 'completed',
-              convertedUrl: url,
-              convertedName: newName,
-              convertedSize: sizeStr
-            } : f));
-            resolve(true);
-          } else {
-            setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, status: 'failed' } : f));
-            resolve(false);
+        const img = new window.Image();
+        img.src = currentSource;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          
+          const ctx = canvas.getContext('2d');
+          // Handle transparency background for JPEGs (defaults to black, let's make it white)
+          if (fileObj.format === 'image/jpeg') {
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
           }
-        }, fileObj.format, fileObj.quality);
-      };
-      img.onerror = () => {
+          
+          ctx.drawImage(img, 0, 0);
+
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const ext = fileObj.format.split('/')[1] === 'jpeg' ? 'jpg' : fileObj.format.split('/')[1];
+              const origName = fileObj.name.substring(0, fileObj.name.lastIndexOf('.'));
+              const suffix = fileObj.removeBg ? '_nobg' : '';
+              const newName = `${origName}${suffix}.${ext}`;
+              const url = URL.createObjectURL(blob);
+              const sizeStr = (blob.size / 1024).toFixed(1) + ' KB';
+
+              setFiles(prev => prev.map(f => f.id === fileObj.id ? {
+                ...f,
+                status: 'completed',
+                convertedUrl: url,
+                convertedName: newName,
+                convertedSize: sizeStr
+              } : f));
+
+              if (currentSource !== fileObj.preview) {
+                URL.revokeObjectURL(currentSource);
+              }
+              resolve(true);
+            } else {
+              setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, status: 'failed' } : f));
+              resolve(false);
+            }
+          }, fileObj.format, fileObj.quality);
+        };
+        img.onerror = () => {
+          setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, status: 'failed' } : f));
+          resolve(false);
+        };
+      } catch (err) {
+        console.error("AI Background removal failed", err);
         setFiles(prev => prev.map(f => f.id === fileObj.id ? { ...f, status: 'failed' } : f));
         resolve(false);
-      };
+      }
     });
   };
 
@@ -156,6 +198,11 @@ export default function ImageConverter() {
   const applyGlobalQuality = (quality) => {
     setGlobalQuality(quality);
     setFiles(prev => prev.map(f => f.status === 'pending' ? { ...f, quality } : f));
+  };
+
+  const applyGlobalRemoveBg = (removeBg) => {
+    setGlobalRemoveBg(removeBg);
+    setFiles(prev => prev.map(f => f.status === 'pending' ? { ...f, removeBg } : f));
   };
 
   const formatLabels = {
@@ -246,11 +293,11 @@ export default function ImageConverter() {
 
                   {/* Settings per file when pending */}
                   {f.status === 'pending' && (
-                    <div className="file-row-settings">
+                    <div className="file-row-settings" style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
                       <select 
                         value={f.format} 
                         className="select-control"
-                        style={{ padding: '6px 10px', fontSize: '0.8rem', width: '110px' }}
+                        style={{ padding: '6px 10px', fontSize: '0.8rem', width: '100px' }}
                         onChange={(e) => updateFileFormat(f.id, e.target.value)}
                       >
                         <option value="image/jpeg">JPG</option>
@@ -258,6 +305,7 @@ export default function ImageConverter() {
                         <option value="image/webp">WebP</option>
                         <option value="image/bmp">BMP</option>
                       </select>
+                      
                       {(f.format === 'image/jpeg' || f.format === 'image/webp') && (
                         <div className="file-slider-wrapper">
                           <input 
@@ -274,22 +322,46 @@ export default function ImageConverter() {
                           </span>
                         </div>
                       )}
+
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', cursor: 'pointer', userSelect: 'none', color: 'var(--text-secondary)' }}>
+                        <input 
+                          type="checkbox" 
+                          checked={f.removeBg || false} 
+                          onChange={(e) => updateFileRemoveBg(f.id, e.target.checked)}
+                          style={{ accentColor: 'var(--accent-purple)', width: '14px', height: '14px', cursor: 'pointer' }}
+                        />
+                        <span>✂️ Remove Bg</span>
+                      </label>
                     </div>
                   )}
 
                   <div className="file-actions">
-                    <span className={`status-badge ${f.status}`}>
-                      {f.status === 'completed' && f.convertedName ? f.convertedName.split('.').pop().toUpperCase() : f.status}
-                    </span>
-                    {f.status === 'pending' && (
-                      <button className="btn btn-secondary btn-download-small" onClick={() => convertSingleFile(f)}>
-                        Convert
-                      </button>
-                    )}
-                    {f.status === 'completed' && (
-                      <button className="btn btn-secondary btn-download-small" onClick={() => downloadFile(f)}>
-                        <Download size={12} /> Download
-                      </button>
+                    {f.status === 'bg-removing' ? (
+                      <span className="status-badge" style={{ background: 'rgba(138,92,245,0.15)', color: 'var(--accent-purple)', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <RefreshCw className="animate-spin" size={12} style={{ animation: 'spin 1s linear infinite' }} />
+                        {f.progressText || 'Removing Bg...'}
+                      </span>
+                    ) : f.status === 'converting' ? (
+                      <span className="status-badge" style={{ background: 'rgba(255,255,255,0.05)', color: 'var(--text-secondary)', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <RefreshCw className="animate-spin" size={12} style={{ animation: 'spin 1s linear infinite' }} />
+                        Converting...
+                      </span>
+                    ) : (
+                      <>
+                        <span className={`status-badge ${f.status}`}>
+                          {f.status === 'completed' && f.convertedName ? f.convertedName.split('.').pop().toUpperCase() : f.status}
+                        </span>
+                        {f.status === 'pending' && (
+                          <button className="btn btn-secondary btn-download-small" onClick={() => convertSingleFile(f)}>
+                            Convert
+                          </button>
+                        )}
+                        {f.status === 'completed' && (
+                          <button className="btn btn-secondary btn-download-small" onClick={() => downloadFile(f)}>
+                            <Download size={12} /> Download
+                          </button>
+                        )}
+                      </>
                     )}
                     <button className="btn-icon-only" onClick={() => removeFile(f.id)}>
                       <Trash2 size={16} />
@@ -339,7 +411,22 @@ export default function ImageConverter() {
               </div>
             )}
 
-            <div className="alert-info-box" style={{ marginTop: '10px' }}>
+            <div className="control-group" style={{ marginTop: '14px' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', padding: '10px 14px', background: 'rgba(255,255,255,0.02)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--card-border)', userSelect: 'none' }}>
+                <input 
+                  type="checkbox" 
+                  checked={globalRemoveBg}
+                  onChange={(e) => applyGlobalRemoveBg(e.target.checked)}
+                  style={{ width: '16px', height: '16px', accentColor: 'var(--accent-purple)', cursor: 'pointer' }}
+                />
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)' }}>✂️ Remove Background (AI)</span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>Automatically isolate subject using client-side AI</span>
+                </div>
+              </label>
+            </div>
+
+            <div className="alert-info-box" style={{ marginTop: '12px' }}>
               <Sliders size={18} />
               <span>
                 Settings chosen above will apply to all newly added files, or any current files still in "pending" status.

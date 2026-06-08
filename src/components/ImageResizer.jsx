@@ -25,6 +25,8 @@ export default function ImageResizer() {
   const [fitMode, setFitMode] = useState('cover'); // 'cover' or 'contain'
   const [backgroundStyle, setBackgroundStyle] = useState('blur'); // 'blur', 'black', 'white'
   const [isProcessing, setIsProcessing] = useState(false);
+  const [quality, setQuality] = useState(0.85);
+  const [estimates, setEstimates] = useState({});
   
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -70,13 +72,6 @@ export default function ImageResizer() {
       return filtered;
     });
   };
-
-  // Re-draw Canvas whenever configurations or active file changes
-  useEffect(() => {
-    if (activeFile && canvasRef.current) {
-      drawOnCanvas(activeFile.preview, canvasRef.current, targetWidth, targetHeight);
-    }
-  }, [activeFileId, selectedPresetId, customWidth, customHeight, fitMode, backgroundStyle, files]);
 
   // Canvas drawing core logic
   const drawOnCanvas = (imgUrl, canvas, tw, th) => {
@@ -157,6 +152,55 @@ export default function ImageResizer() {
     });
   };
 
+  // Re-draw Canvas whenever configurations or active file changes
+  useEffect(() => {
+    if (activeFile && canvasRef.current) {
+      drawOnCanvas(activeFile.preview, canvasRef.current, targetWidth, targetHeight);
+    }
+  }, [activeFileId, selectedPresetId, customWidth, customHeight, fitMode, backgroundStyle, files]);
+
+  // Calculate real-time estimated sizes for all files in the queue
+  useEffect(() => {
+    if (files.length === 0) {
+      setEstimates({});
+      return;
+    }
+
+    let isMounted = true;
+
+    const calculateEstimates = async () => {
+      const tempCanvas = document.createElement('canvas');
+      const newEstimates = {};
+
+      for (const f of files) {
+        if (!isMounted) return;
+        try {
+          await drawOnCanvas(f.preview, tempCanvas, targetWidth, targetHeight);
+          const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, 'image/jpeg', quality));
+          if (blob && isMounted) {
+            const sizeStr = blob.size > 1024 * 1024
+              ? (blob.size / (1024 * 1024)).toFixed(2) + ' MB'
+              : (blob.size / 1024).toFixed(1) + ' KB';
+            newEstimates[f.id] = sizeStr;
+          }
+        } catch (e) {
+          console.error("Estimation failed", e);
+          newEstimates[f.id] = 'Error';
+        }
+      }
+
+      if (isMounted) {
+        setEstimates(newEstimates);
+      }
+    };
+
+    calculateEstimates();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [files, targetWidth, targetHeight, fitMode, backgroundStyle, quality]);
+
   // Process all files in queue
   const resizeAll = async () => {
     if (files.length === 0) return;
@@ -168,7 +212,7 @@ export default function ImageResizer() {
     for (const fileObj of files) {
       await drawOnCanvas(fileObj.preview, tempCanvas, targetWidth, targetHeight);
       
-      const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, 'image/jpeg', 0.9));
+      const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, 'image/jpeg', quality));
       const ext = 'jpg';
       const origName = fileObj.name.substring(0, fileObj.name.lastIndexOf('.'));
       const newName = `${origName}_resized_${targetWidth}x${targetHeight}.${ext}`;
@@ -391,6 +435,42 @@ export default function ImageResizer() {
               )}
             </div>
 
+            {/* Quality and File Size Card */}
+            <div className="glass-panel control-panel">
+              <h3 className="panel-section-title">Quality & File Size</h3>
+              <div className="control-group">
+                <label className="control-label">Compression Quality</label>
+                <div className="quality-slider-container">
+                  <input 
+                    type="range" 
+                    min="0.1" 
+                    max="1.0" 
+                    step="0.05"
+                    value={quality} 
+                    className="quality-slider"
+                    onChange={(e) => setQuality(parseFloat(e.target.value))}
+                  />
+                  <span className="quality-val">{Math.round(quality * 100)}%</span>
+                </div>
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                  Slide to change output size. Lower quality = smaller file size.
+                </p>
+              </div>
+
+              {activeFile && (
+                <div style={{ marginTop: '14px', padding: '10px 14px', background: 'rgba(255,255,255,0.02)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--card-border)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                    <span>Original Size:</span>
+                    <span style={{ fontWeight: 600 }}>{activeFile.size}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                    <span>Estimated Output Size:</span>
+                    <span style={{ fontWeight: 700, color: 'var(--accent-cyan)' }}>{estimates[activeFile.id] || 'Calculating...'}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Processing Commands */}
             <div className="glass-panel control-panel" style={{ background: 'linear-gradient(185deg, rgba(138,92,245,0.08) 0%, rgba(17,25,40,0.55) 100%)' }}>
               <h3 className="panel-section-title">Actions</h3>
@@ -441,8 +521,10 @@ export default function ImageResizer() {
                     {/* Sizes row */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
                       <span>Original: {f.size}</span>
-                      {f.status === 'completed' && f.resizedSize && (
+                      {f.status === 'completed' && f.resizedSize ? (
                         <span style={{ color: 'var(--accent-cyan)' }}>Resized: {f.resizedSize}</span>
+                      ) : (
+                        <span style={{ color: 'var(--accent-cyan)' }}>Est. Size: {estimates[f.id] || 'Calculating...'}</span>
                       )}
                     </div>
                   </div>
