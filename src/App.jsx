@@ -6,6 +6,8 @@ import ImageResizer from './components/ImageResizer';
 import DocumentConverter from './components/DocumentConverter';
 import AdsensePlaceholder from './components/AdsensePlaceholder';
 import logoImg from './assets/logo.png';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
 
 export default function App() {
   const parseCurrentPath = () => {
@@ -95,6 +97,14 @@ export default function App() {
         tab = 'docs';
         docType = 'xlsx-to-pdf';
         break;
+      case 'privacy-policy':
+      case 'privacy':
+        tab = 'privacy';
+        break;
+      case 'terms-of-service':
+      case 'terms':
+        tab = 'terms';
+        break;
       default:
         tab = 'ocr';
         ocrLang = 'eng';
@@ -107,7 +117,9 @@ export default function App() {
     ocr: '/image-to-text',
     convert: '/image-converter',
     resize: '/social-media-resizer',
-    docs: '/document-converter'
+    docs: '/document-converter',
+    privacy: '/privacy-policy',
+    terms: '/terms-of-service'
   };
 
   const [routeParams, setRouteParams] = useState(parseCurrentPath());
@@ -161,6 +173,20 @@ export default function App() {
       icon: <Cpu className="menu-icon" />,
       component: <DocumentConverter initialDocType={routeParams.docType} />,
       subtitle: 'Client-side conversion between Word (DOCX), PDF, and Excel formats'
+    },
+    {
+      id: 'privacy',
+      label: 'Privacy Policy',
+      component: <PrivacyPolicy />,
+      subtitle: 'How we respect your privacy and manage data',
+      hidden: true
+    },
+    {
+      id: 'terms',
+      label: 'Terms of Service',
+      component: <TermsOfService />,
+      subtitle: 'Terms and conditions for using OmniConvert',
+      hidden: true
     }
   ];
 
@@ -185,7 +211,7 @@ export default function App() {
         </div>
 
         <ul className="sidebar-menu">
-          {tabs.map(tab => (
+          {tabs.filter(t => !t.hidden).map(tab => (
             <li key={tab.id}>
               <button
                 className={`menu-item-btn ${activeTab === tab.id ? 'active' : ''}`}
@@ -211,6 +237,21 @@ export default function App() {
             <span style={{ display: 'flex', alignItems: 'center', gap: '4px', justifyContent: 'center', color: 'var(--success)', fontSize: '0.75rem', fontWeight: 600 }}>
               <ShieldCheck size={14} /> 100% Client-Side Privacy
             </span>
+            <div style={{ marginTop: '8px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
+              <button 
+                onClick={() => navigateTo('privacy')} 
+                style={{ background: 'none', border: 'none', padding: 0, color: 'var(--text-muted)', fontSize: '0.7rem', cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                Privacy Policy
+              </button>
+              <span style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}>|</span>
+              <button 
+                onClick={() => navigateTo('terms')} 
+                style={{ background: 'none', border: 'none', padding: 0, color: 'var(--text-muted)', fontSize: '0.7rem', cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                Terms
+              </button>
+            </div>
             <div style={{ marginTop: '8px', fontSize: '0.72rem' }}>
               © 2026 OmniConvert.
             </div>
