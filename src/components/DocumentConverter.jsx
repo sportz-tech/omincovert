@@ -517,7 +517,14 @@ export default function DocumentConverter({ initialDocType = 'pdf-to-docx' }) {
   };
 
   return (
-    <div className="workspace-container">
+    <div className="workspace-container" style={{
+      '--local-theme-color': '#10b981',
+      '--local-theme-rgba': 'rgba(16, 185, 129, 0.03)',
+      '--local-theme-shadow': 'rgba(16, 185, 129, 0.15)',
+      '--local-theme-icon-bg': 'rgba(16, 185, 129, 0.1)',
+      '--local-theme-hover-color': 'var(--accent-purple)',
+      '--local-theme-hover-bg': 'rgba(138, 92, 245, 0.1)'
+    }}>
       {/* Upload Zone */}
       <div 
         className="drag-drop-zone"
@@ -638,13 +645,41 @@ export default function DocumentConverter({ initialDocType = 'pdf-to-docx' }) {
           </div>
         </div>
       ) : (
-        <div className="glass-panel empty-state-card">
-          <FileText className="empty-state-icon" />
-          <div>
-            <h3>No documents loaded</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '4px' }}>
-              Upload Word (.docx), Excel (.xlsx, .xls), or PDF (.pdf) documents to convert them client-side.
-            </p>
+        <div className="dashboard-grid">
+          <div className="glass-panel empty-state-card" style={{ padding: '48px 24px' }}>
+            <FileText className="empty-state-icon" style={{ color: '#10b981', filter: 'drop-shadow(0 0 12px rgba(16, 185, 129, 0.25))' }} />
+            <div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Document Converter</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', marginTop: '8px', maxWidth: '320px', margin: '8px auto 0 auto', lineHeight: '1.5' }}>
+                Convert document formats privately between PDF, Word (.docx), Excel (.xlsx), and text offline inside your browser.
+              </p>
+            </div>
+          </div>
+          
+          <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#10b981', borderBottom: '1px solid var(--card-border)', paddingBottom: '8px', letterSpacing: '0.03em', textTransform: 'uppercase' }}>
+              How to Use (Document Guide)
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: '#10b981', flexShrink: 0 }}>1</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Upload Documents:</strong> Select or drop Word (.docx), Excel (.xlsx), or PDF (.pdf) files in the upload area above.
+                </p>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: '#10b981', flexShrink: 0 }}>2</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Choose Target Format:</strong> Select the output format (like converting PDF pages to PNG or extracting tables to XLSX sheets).
+                </p>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: '#10b981', flexShrink: 0 }}>3</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Convert & Save:</strong> Click **Convert All** and download the completed files directly. No servers are used in the conversion process.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}

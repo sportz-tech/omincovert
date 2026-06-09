@@ -279,7 +279,14 @@ export default function ImageResizer({ initialPresetId = 'insta_story' }) {
   };
 
   return (
-    <div className="workspace-container">
+    <div className="workspace-container" style={{
+      '--local-theme-color': 'var(--accent-pink)',
+      '--local-theme-rgba': 'rgba(255, 0, 122, 0.03)',
+      '--local-theme-shadow': 'rgba(255, 0, 122, 0.15)',
+      '--local-theme-icon-bg': 'rgba(255, 0, 122, 0.1)',
+      '--local-theme-hover-color': 'var(--accent-cyan)',
+      '--local-theme-hover-bg': 'rgba(0, 240, 255, 0.1)'
+    }}>
       {/* Upload Zone */}
       <div 
         className="drag-drop-zone"
@@ -540,13 +547,41 @@ export default function ImageResizer({ initialPresetId = 'insta_story' }) {
           </div>
         </div>
       ) : (
-        <div className="glass-panel empty-state-card">
-          <Image className="empty-state-icon" />
-          <div>
-            <h3>No images loaded</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '4px' }}>
-              Upload single or multiple images to resize, crop, and output them in custom aspect ratios or social formats.
-            </p>
+        <div className="dashboard-grid">
+          <div className="glass-panel empty-state-card" style={{ padding: '48px 24px' }}>
+            <Image className="empty-state-icon" style={{ color: 'var(--accent-pink)', filter: 'drop-shadow(0 0 12px rgba(255, 0, 122, 0.25))' }} />
+            <div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Social Media Resizer</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', marginTop: '8px', maxWidth: '320px', margin: '8px auto 0 auto', lineHeight: '1.5' }}>
+                Crop, scale, and fit images into standard social media ratios (Instagram, Facebook, YouTube) in batches.
+              </p>
+            </div>
+          </div>
+          
+          <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--accent-pink)', borderBottom: '1px solid var(--card-border)', paddingBottom: '8px', letterSpacing: '0.03em', textTransform: 'uppercase' }}>
+              How to Use (Resizer Guide)
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(255, 0, 122, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-pink)', flexShrink: 0 }}>1</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Upload Graphics:</strong> Drag and drop your image files to start. You can preview them in the center canvas.
+                </p>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(255, 0, 122, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-pink)', flexShrink: 0 }}>2</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Pick Preset Aspect Ratio:</strong> Select a preset layout (e.g. YouTube thumbnail, Instagram Story) or set custom dimensions.
+                </p>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(255, 0, 122, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-pink)', flexShrink: 0 }}>3</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Select Fit Mode & Export:</strong> Choose **Cover & Crop** or **Contain & Fit** (which adds beautiful blurred background borders) and download the resized items.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}

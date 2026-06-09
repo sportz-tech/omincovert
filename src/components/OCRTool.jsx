@@ -196,7 +196,14 @@ export default function OCRTool({ initialLanguage = 'eng' }) {
   };
 
   return (
-    <div className="workspace-container">
+    <div className="workspace-container" style={{
+      '--local-theme-color': 'var(--accent-purple)',
+      '--local-theme-rgba': 'rgba(138, 92, 245, 0.03)',
+      '--local-theme-shadow': 'rgba(138, 92, 245, 0.15)',
+      '--local-theme-icon-bg': 'rgba(138, 92, 245, 0.1)',
+      '--local-theme-hover-color': 'var(--accent-cyan)',
+      '--local-theme-hover-bg': 'rgba(0, 240, 255, 0.1)'
+    }}>
       {/* Drag Drop Area */}
       <div 
         className="drag-drop-zone"
@@ -392,13 +399,41 @@ export default function OCRTool({ initialLanguage = 'eng' }) {
           )}
         </div>
       ) : (
-        <div className="glass-panel empty-state-card">
-          <FileText className="empty-state-icon" />
-          <div>
-            <h3>No images uploaded yet</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '4px' }}>
-              Upload images containing English text to extract and convert them to TXT or MS Word (.docx) format.
-            </p>
+        <div className="dashboard-grid">
+          <div className="glass-panel empty-state-card" style={{ padding: '48px 24px' }}>
+            <FileText className="empty-state-icon" style={{ color: 'var(--accent-purple)', filter: 'drop-shadow(0 0 12px rgba(138, 92, 245, 0.25))' }} />
+            <div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Image to Text (OCR)</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', marginTop: '8px', maxWidth: '320px', margin: '8px auto 0 auto', lineHeight: '1.5' }}>
+                Extract editable text from scanned files, screen clippings, and documents instantly using client-side engine.
+              </p>
+            </div>
+          </div>
+          
+          <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--accent-purple)', borderBottom: '1px solid var(--card-border)', paddingBottom: '8px', letterSpacing: '0.03em', textTransform: 'uppercase' }}>
+              How to Use (OCR Guide)
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(138, 92, 245, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-purple)', flexShrink: 0 }}>1</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Upload Scans:</strong> Drag and drop single or multiple image files (PNG, JPG, WebP) in the box above.
+                </p>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(138, 92, 245, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-purple)', flexShrink: 0 }}>2</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Choose OCR Language:</strong> Select between English, Hindi, or combination modes to optimize recognition text accuracy.
+                </p>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(138, 92, 245, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-purple)', flexShrink: 0 }}>3</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Edit & Download:</strong> Click **Convert All**, review the text in the side-pane editor, and export as Word Document (.docx) or Text (.txt).
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}

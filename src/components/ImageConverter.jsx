@@ -218,7 +218,14 @@ export default function ImageConverter({ initialRemoveBg = false }) {
   };
 
   return (
-    <div className="workspace-container">
+    <div className="workspace-container" style={{
+      '--local-theme-color': 'var(--accent-cyan)',
+      '--local-theme-rgba': 'rgba(0, 240, 255, 0.03)',
+      '--local-theme-shadow': 'rgba(0, 240, 255, 0.15)',
+      '--local-theme-icon-bg': 'rgba(0, 240, 255, 0.1)',
+      '--local-theme-hover-color': 'var(--accent-purple)',
+      '--local-theme-hover-bg': 'rgba(138, 92, 245, 0.1)'
+    }}>
       {/* Upload Zone */}
       <div 
         className="drag-drop-zone"
@@ -440,13 +447,41 @@ export default function ImageConverter({ initialRemoveBg = false }) {
           </div>
         </div>
       ) : (
-        <div className="glass-panel empty-state-card">
-          <Image className="empty-state-icon" />
-          <div>
-            <h3>No images loaded</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '4px' }}>
-              Upload single or multiple images to convert them to other file types instantly.
-            </p>
+        <div className="dashboard-grid">
+          <div className="glass-panel empty-state-card" style={{ padding: '48px 24px' }}>
+            <Image className="empty-state-icon" style={{ color: 'var(--accent-cyan)', filter: 'drop-shadow(0 0 12px rgba(0, 240, 255, 0.25))' }} />
+            <div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Image Converter</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.88rem', marginTop: '8px', maxWidth: '320px', margin: '8px auto 0 auto', lineHeight: '1.5' }}>
+                Batch convert images between PNG, JPG, WebP, and BMP format with custom compression qualities.
+              </p>
+            </div>
+          </div>
+          
+          <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--accent-cyan)', borderBottom: '1px solid var(--card-border)', paddingBottom: '8px', letterSpacing: '0.03em', textTransform: 'uppercase' }}>
+              How to Use (Converter Guide)
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(0, 240, 255, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-cyan)', flexShrink: 0 }}>1</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Upload Images:</strong> Select or drop single/multiple images in the dashed box above.
+                </p>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(0, 240, 255, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-cyan)', flexShrink: 0 }}>2</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Adjust Preferences:</strong> Choose a global format (e.g. PNG, WebP) or check the **Remove Background (AI)** option.
+                </p>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: 'rgba(0, 240, 255, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent-cyan)', flexShrink: 0 }}>3</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <strong>Download Outputs:</strong> Click **Convert All**, and download individual converted files or retrieve them as a single ZIP archive.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}
