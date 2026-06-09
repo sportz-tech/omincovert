@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 // Central configuration for Adsense. 
 // Replace with your Google Adsense Publisher ID (e.g., 'ca-pub-1234567890123456')
-export const ADSENSE_PUBLISHER_ID = ''; 
+export const ADSENSE_PUBLISHER_ID = 'ca-pub-4370867821860158'; 
 
 export default function AdsensePlaceholder({ format = 'rectangle', slotId = '' }) {
   const isEnabled = !!ADSENSE_PUBLISHER_ID;
