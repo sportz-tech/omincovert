@@ -52,6 +52,11 @@ export default function TermsOfService() {
       <p style={{ lineHeight: '1.6', marginBottom: '20px' }}>
         Any claim relating to OmniConvert shall be governed by the laws of our operating jurisdiction, without regard to its conflict of law provisions.
       </p>
+
+      <h3 style={{ fontSize: '1.2rem', marginTop: '25px', marginBottom: '10px' }}>8. Contact Us</h3>
+      <p style={{ lineHeight: '1.6', marginBottom: '20px' }}>
+        If you have any questions or suggestions about our Terms of Service, please contact us by email at <a href="mailto:support@ominconvert.com" style={{ color: 'var(--primary)' }}>support@ominconvert.com</a>.
+      </p>
     </div>
   );
 }

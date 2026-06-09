@@ -46,7 +46,7 @@ export default function PrivacyPolicy() {
       </p>
 
       <p style={{ marginTop: '30px', borderTop: '1px solid var(--border)', paddingTop: '20px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-        If you require any more information or have any questions about our privacy policy, please feel free to contact us.
+        If you require any more information or have any questions about our privacy policy, please feel free to contact us by email at <a href="mailto:support@ominconvert.com" style={{ color: 'var(--primary)' }}>support@ominconvert.com</a>.
       </p>
     </div>
   );
