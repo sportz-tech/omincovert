@@ -186,7 +186,7 @@ export default function OCRTool({ initialLanguage = 'eng' }) {
     const url = URL.createObjectURL(content);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'omniconvert_ocr_texts.zip';
+    a.download = 'ominconvert_ocr_texts.zip';
     a.click();
     URL.revokeObjectURL(url);
   };

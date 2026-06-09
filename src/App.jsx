@@ -185,7 +185,7 @@ export default function App() {
       id: 'terms',
       label: 'Terms of Service',
       component: <TermsOfService />,
-      subtitle: 'Terms and conditions for using OmniConvert',
+      subtitle: 'Terms and conditions for using OminConvert',
       hidden: true
     }
   ];
@@ -203,7 +203,7 @@ export default function App() {
         <div className="sidebar-brand">
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <img src={logoImg} className="logo-img" alt="Logo" />
-            <span className="brand-name">OmniConvert</span>
+            <span className="brand-name">OminConvert</span>
           </div>
           <button className="mobile-close-btn" onClick={() => setIsSidebarOpen(false)}>
             <X size={20} />
@@ -253,7 +253,7 @@ export default function App() {
               </button>
             </div>
             <div style={{ marginTop: '8px', fontSize: '0.72rem' }}>
-              © 2026 OmniConvert.
+              © 2026 OminConvert.
             </div>
           </div>
         </div>

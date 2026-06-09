@@ -273,7 +273,7 @@ export default function ImageResizer({ initialPresetId = 'insta_story' }) {
     const url = URL.createObjectURL(content);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `omniconvert_resized_${targetWidth}x${targetHeight}.zip`;
+    a.download = `ominconvert_resized_${targetWidth}x${targetHeight}.zip`;
     a.click();
     URL.revokeObjectURL(url);
   };

@@ -189,7 +189,7 @@ export default function ImageConverter({ initialRemoveBg = false }) {
     const url = URL.createObjectURL(content);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'omniconvert_images.zip';
+    a.download = 'ominconvert_images.zip';
     a.click();
     URL.revokeObjectURL(url);
   };

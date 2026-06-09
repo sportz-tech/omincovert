@@ -9,23 +9,23 @@ export default function PrivacyPolicy() {
       </p>
       
       <p style={{ lineHeight: '1.6', marginBottom: '20px' }}>
-        At <strong>OmniConvert</strong> (accessible from <a href="https://ominconvert.com" style={{ color: 'var(--primary)' }}>https://ominconvert.com</a>), the privacy of our visitors is of extreme importance to us. This Privacy Policy document outlines the types of personal information received and collected by OmniConvert and how it is used.
+        At <strong>OminConvert</strong> (accessible from <a href="https://ominconvert.com" style={{ color: 'var(--primary)' }}>https://ominconvert.com</a>), the privacy of our visitors is of extreme importance to us. This Privacy Policy document outlines the types of personal information received and collected by OminConvert and how it is used.
       </p>
 
       <h3 style={{ fontSize: '1.2rem', marginTop: '25px', marginBottom: '10px' }}>1. 100% Client-Side Privacy (Zero Server Uploads)</h3>
       <p style={{ lineHeight: '1.6', marginBottom: '20px' }}>
-        OmniConvert operates entirely inside your web browser. All file conversions, OCR text extraction, background removal, and image resizing are processed locally on your device using client-side JavaScript and WebAssembly. 
+        OminConvert operates entirely inside your web browser. All file conversions, OCR text extraction, background removal, and image resizing are processed locally on your device using client-side JavaScript and WebAssembly. 
         <strong> We never upload your documents, images, or personal files to any server.</strong> Your data remains privately on your computer at all times.
       </p>
 
       <h3 style={{ fontSize: '1.2rem', marginTop: '25px', marginBottom: '10px' }}>2. Log Files</h3>
       <p style={{ lineHeight: '1.6', marginBottom: '20px' }}>
-        Like many other websites, OmniConvert makes use of log files. These files merely log visitors to the site – usually a standard procedure for hosting companies and a part of hosting services' analytics. The information inside the log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date/time stamp, referring/exit pages, and possibly the number of clicks. This information is used to analyze trends, administer the site, track user's movement around the site, and gather demographic information. IP addresses and other such information are not linked to any information that is personally identifiable.
+        Like many other websites, OminConvert makes use of log files. These files merely log visitors to the site – usually a standard procedure for hosting companies and a part of hosting services' analytics. The information inside the log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date/time stamp, referring/exit pages, and possibly the number of clicks. This information is used to analyze trends, administer the site, track user's movement around the site, and gather demographic information. IP addresses and other such information are not linked to any information that is personally identifiable.
       </p>
 
       <h3 style={{ fontSize: '1.2rem', marginTop: '25px', marginBottom: '10px' }}>3. Google DoubleClick DART Cookie (Google AdSense)</h3>
       <p style={{ lineHeight: '1.6', marginBottom: '20px' }}>
-        Google, as a third-party vendor, uses cookies to serve ads on OmniConvert. Google's use of the DART cookie enables it to serve ads to our site's visitors based upon their visit to OmniConvert and other sites on the Internet. 
+        Google, as a third-party vendor, uses cookies to serve ads on OminConvert. Google's use of the DART cookie enables it to serve ads to our site's visitors based upon their visit to OminConvert and other sites on the Internet. 
         Users may opt out of the use of the DART cookie by visiting the Google ad and content network Privacy Policy at the following URL: <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)' }}>https://policies.google.com/technologies/ads</a>.
       </p>
 
@@ -36,8 +36,8 @@ export default function PrivacyPolicy() {
 
       <h3 style={{ fontSize: '1.2rem', marginTop: '25px', marginBottom: '10px' }}>5. Third-Party Ad Networks</h3>
       <p style={{ lineHeight: '1.6', marginBottom: '20px' }}>
-        Third-party ad servers or ad networks use technology in their respective advertisements and links that appear on OmniConvert and which are sent directly to your browser. They automatically receive your IP address when this occurs. Other technologies (such as cookies, JavaScript, or Web Beacons) may also be used by our site's third-party ad networks to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on the site.
-        OmniConvert has no access to or control over these cookies that are used by third-party advertisers.
+        Third-party ad servers or ad networks use technology in their respective advertisements and links that appear on OminConvert and which are sent directly to your browser. They automatically receive your IP address when this occurs. Other technologies (such as cookies, JavaScript, or Web Beacons) may also be used by our site's third-party ad networks to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on the site.
+        OminConvert has no access to or control over these cookies that are used by third-party advertisers.
       </p>
 
       <h3 style={{ fontSize: '1.2rem', marginTop: '25px', marginBottom: '10px' }}>6. Consent</h3>

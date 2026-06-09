@@ -492,7 +492,7 @@ export default function DocumentConverter({ initialDocType = 'pdf-to-docx' }) {
     const url = URL.createObjectURL(content);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'omniconvert_documents.zip';
+    a.download = 'ominconvert_documents.zip';
     a.click();
     URL.revokeObjectURL(url);
   };
