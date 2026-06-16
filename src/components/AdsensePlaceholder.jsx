@@ -18,7 +18,7 @@ export default function AdsensePlaceholder({ format = 'rectangle', slotId = '' }
           script.crossOrigin = 'anonymous';
           document.body.appendChild(script);
         }
-        
+
         // Push adsense calls
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (err) {
@@ -30,7 +30,7 @@ export default function AdsensePlaceholder({ format = 'rectangle', slotId = '' }
   // Determine size classes
   let sizeClass = 'adsense-rectangle';
   let sizeText = 'Ad Banner (336x280)';
-  
+
   if (format === 'leaderboard') {
     sizeClass = 'adsense-leaderboard';
     sizeText = 'Responsive Leaderboard (728x90)';
