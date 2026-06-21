@@ -1,0 +1,23 @@
+{
+  "name": "OminConvert | Free Offline File Converter & OCR",
+  "short_name": "OminConvert",
+  "description": "100% Free online tools with no subscription and no signup required. Convert PDF, Word, Excel, OCR Hindi/English, and resize images privately and offline in your browser.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0f19",
+  "theme_color": "#8a5cf5",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
