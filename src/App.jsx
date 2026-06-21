@@ -227,10 +227,7 @@ export default function App() {
           ))}
         </ul>
 
-        {/* Sidebar Advertisement Slot */}
-        <div style={{ padding: '0 16px', marginBottom: '8px' }}>
-          <AdsensePlaceholder format="rectangle" slotId="1111111111" />
-        </div>
+
 
         <div className="sidebar-footer">
           <div className="sidebar-footer-links">
@@ -279,15 +276,24 @@ export default function App() {
           </div>
         </header>
 
-        {/* Top Advertisement Slot (Leaderboard format) */}
-        <div className="adsense-header-container">
-          <AdsensePlaceholder format="leaderboard" slotId="2222222222" />
-        </div>
+        {/* Top Advertisement Slot (Leaderboard format) - Hidden on Privacy Policy and Terms of Service */}
+        {activeTab !== 'privacy' && activeTab !== 'terms' && (
+          <div className="adsense-header-container">
+            <AdsensePlaceholder format="leaderboard" slotId="2518473814" />
+          </div>
+        )}
 
         {/* Dynamic Tool Content */}
         <div style={{ flex: 1 }}>
           {currentTab.component}
         </div>
+
+        {/* Bottom Content-Rich Advertisement Slot - Hidden on Privacy Policy and Terms of Service */}
+        {activeTab !== 'privacy' && activeTab !== 'terms' && (
+          <div className="adsense-bottom-container" style={{ margin: '24px 0', display: 'flex', justifyContent: 'center', width: '100%' }}>
+            <AdsensePlaceholder format="rectangle" slotId="4323610152" />
+          </div>
+        )}
       </main>
     </div>
   );

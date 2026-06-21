@@ -44,7 +44,56 @@
      crossorigin="anonymous"></script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Static pre-rendered SEO content for search engine bots & AdSense review crawlers -->
+      <!-- This content is instantly replaced by the React app once it mounts -->
+      <div style="padding: 20px; font-family: sans-serif; max-width: 800px; margin: 0 auto; line-height: 1.6; color: #333;">
+        <header style="margin-bottom: 30px; text-align: center;">
+          <h1 style="font-size: 2.2rem; color: #111;">OminConvert | Free Online File Converter & OCR Tools</h1>
+          <p style="font-size: 1.1rem; color: #666;">100% Free online tools with no subscription, no registration, and no signup required. Convert PDF to Word/Excel, run Hindi/English OCR, resize images, and convert formats privately in your browser.</p>
+        </header>
+
+        <section style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.6rem; color: #222; border-bottom: 2px solid #eaeaea; padding-bottom: 8px;">Advanced Client-Side Document & Image Conversion</h2>
+          <p>OminConvert is a comprehensive suite of free web utility tools designed to perform all file processing directly in your browser. Unlike traditional converters that upload your private documents to external servers, OminConvert utilizes modern WebAssembly and client-side JavaScript libraries to run conversion and text extraction engines locally. This guarantees 100% data privacy and security for sensitive files.</p>
+        </section>
+
+        <section style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.6rem; color: #222; border-bottom: 2px solid #eaeaea; padding-bottom: 8px;">Our Core Features & Utilities</h2>
+          
+          <h3 style="font-size: 1.25rem; color: #333; margin-top: 20px;">1. Image to Text (OCR Tool)</h3>
+          <p>Extract editable text from scanned documents, screenshots, and image files instantly. Supports multiple languages including English and Hindi. OminConvert uses a client-side OCR engine to recognize characters, allowing you to edit the output in real-time and export to Word (.docx) or plain text (.txt) formats.</p>
+
+          <h3 style="font-size: 1.25rem; color: #333; margin-top: 20px;">2. Bulk Image Converter & Background Remover</h3>
+          <p>Convert multiple images simultaneously between PNG, JPG, WebP, and BMP formats. You can adjust compression quality settings to optimize file sizes. Additionally, the tool includes a client-side AI model to automatically detect the main subject of an image and remove the background, making it transparent.</p>
+
+          <h3 style="font-size: 1.25rem; color: #333; margin-top: 20px;">3. Social Media Image Resizer</h3>
+          <p>Instantly crop, resize, and fit images to match precise dimensions for various social media platforms. Presets include Facebook post/cover, Instagram square/story/reel, YouTube thumbnail, and Pinterest pins.</p>
+
+          <h3 style="font-size: 1.25rem; color: #333; margin-top: 20px;">4. Private Document Converter</h3>
+          <p>Convert documents between PDF, Word (DOCX), Excel (XLSX), and text formats. The entire conversion process occurs on your local machine, keeping your files safe from data leaks.</p>
+        </section>
+
+        <section style="margin-bottom: 40px;">
+          <h2 style="font-size: 1.6rem; color: #222; border-bottom: 2px solid #eaeaea; padding-bottom: 8px;">Frequently Asked Questions (FAQ)</h2>
+          
+          <div style="margin-top: 20px;">
+            <h4 style="font-size: 1.1rem; color: #111; margin-bottom: 6px;">Is OminConvert safe and secure?</h4>
+            <p>Yes, OminConvert is completely secure. Your files and photos are never uploaded to any backend server. All processing (OCR text extraction, image converting, resizing, and PDF parsing) happens locally on your computer using client-side technologies.</p>
+          </div>
+          
+          <div style="margin-top: 20px;">
+            <h4 style="font-size: 1.1rem; color: #111; margin-bottom: 6px;">Do I need to sign up or pay a subscription fee?</h4>
+            <p>No. OminConvert is entirely free to use with no usage limits, no signup requirements, and no hidden subscriptions. It is a utility web application funded solely by non-intrusive advertisements.</p>
+          </div>
+          
+          <div style="margin-top: 20px;">
+            <h4 style="font-size: 1.1rem; color: #111; margin-bottom: 6px;">Does this tool support Hindi OCR text extraction?</h4>
+            <p>Yes. OminConvert features built-in support for Devanagari script (Hindi) and English-Hindi bilingual recognition, optimizing accuracy for Indian document scans.</p>
+          </div>
+        </section>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
